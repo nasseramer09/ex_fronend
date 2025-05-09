@@ -1,3 +1,5 @@
 export default function Home(){
-    return
+    return <div>
+        <h1> Välkommen till hem </h1>
+    </div>
 }
