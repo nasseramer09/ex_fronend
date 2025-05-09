@@ -1,0 +1,132 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html{
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.container{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    flex-wrap: wrap;
+}
+
+.left-section, .right-section{
+flex: 1 1 400px;
+padding: 2rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+
+.left-section{
+    background-color: #f0f4f8;
+    align-items: center;
+}
+
+.logo{
+    width: 120px;
+    margin-bottom: 1rem;
+}
+
+h1{
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #3498db;
+}
+
+p{
+    color: #00545b;
+    font-size: large;
+    margin-bottom: 20px;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab{
+    margin-right: 20px;
+    padding-bottom: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+    border-color:#3498db;
+    color: #3498db;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.input-field{
+    margin-bottom: 20px;
+}
+
+input{
+width: 100%;
+padding: 1rem;
+font-size: 16px;
+border: 1px solid #ccc;
+border-radius: 6px;
+}
+
+input:focus{
+    border-color: #3498db;
+    outline: none;
+}
+
+.login-button{
+    padding: 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+.divider{
+display: flex;
+align-items: center;
+margin: 30px 0 20px;
+}
+
+.divider span{
+    display: 1;
+    height: 1px;
+    background-color: #ccc;
+    }
+
+    
+.login-button:hover{
+    
+    background-color: #2980b9;
+}
+
+.right-section{
+    width: 50%;
+    background-color: #f5f7fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-section img{
+    max-width: 110%;
+    height: 100%;
+   
+}
