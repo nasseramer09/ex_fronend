@@ -1,0 +1,127 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #A6D1E6;
+    padding: 1rem;
+}
+
+.navbar-left{
+display: flex;
+align-items: center;
+}
+
+.logo-img{
+    height: 50px;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+}
+
+.logo{
+   font-size: 1.5rem;
+   color: white;
+   display: flex;
+   align-items: center;
+}
+
+.navbar-center{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-right{
+    text-align: center;
+}
+
+.nav-links{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.nav-links li{
+   margin-left: 0 1rem;
+}
+
+.nav-links li:first-child{
+   margin-left: 0;
+}
+
+.nav-links a{
+    color: white;
+    text-decoration: none;
+    font-size: larger;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+
+.nav-links a::after{
+   content: "";
+   position: absolute;
+   left: 0;
+   bottom: 0;
+   height: 2px;
+   width: 0%;
+   background-color: white;
+   transition: width 0.3s ease;
+
+}
+
+.nav-links a:hover{
+    color: #ffffff;
+   background-color: transparent;   
+   
+}
+
+.nav-links a:hover::after{
+    width: 100%;  
+   
+}
+
+@supports (gap: 1rem){
+    .nav-links{gap: 1rem;
+    }
+    .nav-links li{
+        margin-left: 0;
+    }
+}
+
+.nav-links{
+    flex-wrap: wrap;
+}
+
+.nav-links li{
+    margin-bottom: 0.5rem;
+}
+
+.navbar{
+    padding: 1rem;
+}
+
+.logout-div{
+    margin-left: 1rem;
+}
+
+.loggaut{
+    background-color: #ffffff;
+    color: #A6D1E6;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.loggaut:hover{
+    background-color: red;
+    color: white;
+    transition: scale(1.05);
+}
