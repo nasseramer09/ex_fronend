@@ -1,10 +1,17 @@
 import "./styles/navbar.css"
 import logo from "../assets/logo.png"
 import { FaUserCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function Navbar(){
+    const navigate  = useNavigate();
+
+    const handleLogout = ()=>{
+        localStorage.removeItem("token");
+        navigate("/login")
+    }
     return (
 
         <div className="navbar">
@@ -30,7 +37,7 @@ export default function Navbar(){
             </div>
 
             <div className="logout-div">
-                <button className="loggaut"> Logga ut </button>
+                <button className="loggaut" onClick={handleLogout}> Logga ut </button>
             </div>
 
         </div>
