@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Layout from "../components/Layout";
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000';
@@ -51,7 +52,7 @@ export default function AdminPanel(){
             const data = await response.json();
             
             if (response.ok){
-                setActiveTab('login');
+                navigate('/login');
                 console.log("Registeration lyckades", data);
             }else{
                 setError(data.message || 'Registeration misslyckades');
@@ -65,7 +66,7 @@ export default function AdminPanel(){
 
    return( <>
     
-
+    <Layout children={undefined}></Layout>
     {activeTab === 'register' && ( 
             <form onSubmit={handleCreateAccountSubmit} className="form" data-tab= "register">
             {error && <p className="error-message"> {error} </p>}
