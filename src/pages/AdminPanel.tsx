@@ -1,154 +1,40 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import CreateAccount from "../components/CreateAccount";
 import Layout from "../components/Layout";
-
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000';
+import Tasks from "../components/Tasks";
+import Users from "../components/Users";
+import "./styles/admin_panel.css"
 
 export default function AdminPanel(){
-    const [activeTab, setActiveTab] = useState("/login");
-    const [registeremail, setRegisterEmail] = useState("");
-    const [registerPassword, setRegisterPassword] = useState("");
-    const [registerConfermPassword, setRegisterConfermPassword] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [userName, setUserName] = useState("");
-    const [role, setRole] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
-
-     const handleTabChange = (tabName: "login" | "register")=>{
-            setActiveTab(tabName);
-            setError(" ");
-        }
-
-    const handleCreateAccountSubmit = async ( e: React.FormEvent) => {
-        e.preventDefault();
-        setError("");
-
-        if (registerPassword !== registerConfermPassword){
-            setError ("Lösenorden matchar inte");
-            return;
-        }
-
-        try{
-            const response = await fetch(`${API_BASE_URL}/api/users/create`, {
-                method: 'POST',
-                headers:{'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    email: registeremail, 
-                    password_hash: registerPassword,
-                    first_name:firstName,
-                    last_name:lastName,
-                    username: userName,
-                    role:role,
-                    phone_number:phoneNumber
-
-
-                
-                })
-            });
-            const data = await response.json();
-            
-            if (response.ok){
-                navigate('/login');
-                console.log("Registeration lyckades", data);
-            }else{
-                setError(data.message || 'Registeration misslyckades');
-                console.log("Registeration misslyckades", data);
-            }
-        }catch(error:any){
-            setError("Ett fel uppstod vid skapandet av konto ");
-            console.log("FEL vid registeration: ", error)
-        }
-    };
+   
 
    return( <>
     
     <Layout children={undefined}></Layout>
-    {activeTab === 'register' && ( 
-            <form onSubmit={handleCreateAccountSubmit} className="form" data-tab= "register">
-            {error && <p className="error-message"> {error} </p>}
+    <Tasks/>
 
-                <div className="input-field"> 
+    <Users/>
+    <CreateAccount/>
+    
+      <div className="row">
 
-                <label> Förnamen
-                <input type="text" 
-                placeholder="Förnamn" 
-                value={firstName}
-                onChange={(e)=>setFirstName(e.target.value)} 
-                required />
-                </label>
+        <div className="card">
+            <h4> Totalt uppdrag </h4>
+            <p id="totalUppdrag"> empty </p>
+        </div>
 
-                <label> Efternamn
-                <input type="text" 
-                placeholder="Efternamn" 
-                value={lastName}
-                onChange={(e)=>setLastName(e.target.value)} 
-                required />
-                </label>
+        <div className="card">
+            <h4> Activa uppdrag </h4>
+            <p id="activaUppdrag"> empty </p>
+        </div>
 
-                <label>
-                Användarnamn
-                <input type="text" 
-                placeholder="Användarnamn" 
-                value={userName}
-                onChange={(e)=>setUserName(e.target.value)} 
-                required />
-                </label>
+        <div className="card">
+        <h4> Lediga Bilar </h4>
+        <p id="ledigaBilar"> empty </p>
+        </div>
 
-                <label> 
-                E-post adress
-                <input type="email" 
-                placeholder="E-postadress" 
-                value={registeremail}
-                onChange={(e)=>setRegisterEmail(e.target.value)} 
-                required />
-                </label>
-
-                <label htmlFor="lösenord">
-                Lösenord
-                <input type="password" 
-                placeholder="Lösenord" 
-                value={registerPassword}
-                onChange={(e)=>setRegisterPassword(e.target.value)} 
-                required />
-                </label>
-
-                <label htmlFor="password"> 
-                Bekräfta Lösenord 
-                <input type="password" 
-                placeholder="Bekräfta Lösenord" 
-                value={registerConfermPassword}
-                onChange={(e)=>setRegisterConfermPassword(e.target.value)} 
-                required />
-                </label>
-
-                <label>
-                    Välj roll
-                    <select value={role} onChange={(e)=>setRole(e.target.value)}>
-                        <option value="">Välj roll </option>
-                        <option value='admin'> Admin </option>
-                        <option value='personal'> Personal </option>
-
-                    </select>
-                </label>
-
-                <label >
-                    Telefonnummer (Valfritt)
-                    <input type="tel"
-                    placeholder="Telefonnummer"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)} />
-                </label>
-
-
-                </div>
-                <button type="submit" className="login-button"> Skapa konto </button>
-            </form>
-        
-        )}
+  </div>
+            
+       
     </>
    )
 }
