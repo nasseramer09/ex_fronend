@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaEnvelope, FaPhone } from "react-icons/fa";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000';
+import "./styles/tasks.css"
 
 export default function Users(){
     const [users, setUsers] = useState([]);
@@ -10,7 +11,7 @@ export default function Users(){
     useEffect(() =>{
         const fetchUsers = async () =>{
             try {
-                const response = await fetch(`${API_BASE_URL}/api/tasks/get_all_users`,{
+                const response = await fetch(`${API_BASE_URL}/api/users/get_all_users`,{
                     method: 'GET',
                 });
 
@@ -31,40 +32,46 @@ export default function Users(){
 }, []);
 
 return(
-    <>
-     <div className="task-container">
-        <h2>Användare Lista </h2>
-        {error && <p style={{color: "red"}}>{error}</p>}
-    <table className="table"> 
+   
+  <div className="container">
+        
+        {error && <p className="error">{error}</p>}
+    <div className="data-list">
+<h2> Användare Lista </h2>
+{users.map((user:any)=>(
+      <div key={user.id} className="data-item"> 
 
-    <thead>
-      <tr>
-        <th> Förnamn  </th>
-        <th> Efternamn </th>
-        <th> Role </th>
-        <th>  <FaPhone size={24} color="white" /></th>
-        <th>  <FaEnvelope size={24} color="white" /></th>
+            
+          <div className="data-pair">
+              <span className="data-label"> Förnamn:  </span>
+              <span> {user.first_name} </span>
+          </div>
+
+          <div className="data-pair">
+              <span className="data-label"> Efternamn:  </span>
+              <span> {user.last_name} </span>
+          </div>
+          
+          <div className="data-pair">
+              <span className="data-label"> Role:  </span>
+              <span> {user.role} </span>
+          </div>
+      
+          <div className="data-pair">
+              <span className="data-label"> <FaPhone/>  </span>
+              <span> {user.phone_number} </span>
+          </div>
+
+          <div className="data-pair">
+              <span className="data-label"> <FaEnvelope/>  </span>
+              <span> {user.email} </span>
+          </div>
         
-      </tr>
-    </thead>
-    <tbody id="tbody">
-         {users.map((user:any)=>(
-                <tr key={user.id} className="tr-limit"> 
-         
-     
-        <td className="text-center"> {user.first_name} </td>
-        <td className="text-center"> {user.last_name} </td>
-        <td className="text-center"> {user.role}  </td>
-        <td className="text-center"> {user.phone_number} </td>
-         <td className="text-center"> {user.email}  </td>
-        
-      </tr>
+      </div>
        ))}
-    </tbody>
-  </table>
+    </div>
   </div>
     
-    </>
 );
 
 }

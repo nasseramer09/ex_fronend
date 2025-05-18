@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000
 
 export default function CreateAccount(){
 
-     const [activeTab, setActiveTab] = useState("/login");
+    
     const [registeremail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
     const [registerConfermPassword, setRegisterConfermPassword] = useState("");
@@ -17,10 +17,7 @@ export default function CreateAccount(){
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-     const handleTabChange = (tabName: "login" | "register")=>{
-            setActiveTab(tabName);
-            setError(" ");
-        }
+    
 
     const handleCreateAccountSubmit = async ( e: React.FormEvent) => {
         e.preventDefault();
