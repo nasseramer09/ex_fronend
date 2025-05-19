@@ -15,7 +15,7 @@ gap: 30px;
 }
 
 .card{
-    background-color: #A6D1E6 ;;
+    background-color: #948979;
     padding: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -53,10 +53,13 @@ gap: 30px;
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    text-align: center;
+
 }
 
 .table th{
-   background-color: #502c50 ;;
+   text-align: center;
+   background-color: #DFD0B8;;
    color: white;
 
 }
