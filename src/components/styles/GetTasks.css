@@ -1,19 +1,16 @@
-.container{
-   padding: 2rem;
-   background: #f9fafb;
-   border-radius: 12px;
+.dashboard-container{
+   max-width: 2800px;
    margin: 2rem auto;
-   max-width: 800px;
-   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-   max-height: 85vh;
-   overflow-y: auto;
-   background-color: #374151;
+   background-color: #5C7285;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-h2{
-  text-align: center;  
-  margin-bottom: 2rem;
-  font-size: 1.8rem;
+.dashboard-container h1{
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: white;
+
 }
 
 .error{
@@ -23,55 +20,56 @@ h2{
 }
 
 .task-grid{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
 }
 
 .task-block{
     margin-bottom: 0.75rem;
     display: flex;
-    flex-direction: col;
-    align-items: center;
-    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
     border-bottom: 1px solid gold;
+    padding-bottom: 0.5rem;
+}
+
+.task-block:last-child{
+    
+    border-bottom: none;
+   
 }
 
 
 .data-item{
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.8);
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: white;
-    padding: 1rem;
-    border-radius: 10px;
-    border: 1px solid black;
-    min-height: 360px;
-    max-height: 360px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    transition: transform 0.2s ease;
-    overflow: hidden;
+    min-height: auto;
+    max-height: none;
+    transition: transform 0.2s ease-in-out;
+    
 }
 
 
 .data-item:hover{
-   transform: scale(1.01);
+   transform: scale(1.02);
+   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .label{
 font-weight: bold;
 color: #374151;
-margin-bottom: 0.25rem;
-display: flex;
-align-items: center;
-gap: 0.3rem;
-word-break: break-word;
+min-width: 0.9rem;
+
 }
 
 .value{
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: black;
     word-break: break-word;
     
@@ -79,17 +77,19 @@ word-break: break-word;
 
 
 .status{
-        padding: 0.4rem 0.75rem;
-        border-radius: 50px;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
         text-align: center;
         font-weight: bold;
         color: white;
-        text-transform: capitalize;
+        text-transform: uppercase;
         align-self: flex-start;
+        font-size: 0.8rem;
 }
 
 .status.planerat{
         background-color: #f59e0b;
+        color: #333;
 }
 
 .status.pågående{
@@ -102,76 +102,29 @@ word-break: break-word;
    
 @media (max-width:400px) {
     .container{
-        padding: 2rem;
-        background: #f9fafb;
-        border-radius: 12px;
-        margin: 2rem auto;
-        max-width: 1200px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        padding: 1rem;
+        margin: 1rem auto;
+       
    
 }
 
-    h2{
-        text-align: center;  
-        margin-bottom: 2rem;
-        font-size: 1.8rem;
-    }
-
-    .error{
-        color: red;
-        text-align: center;
-        margin-bottom: 1rem;
-    }
 
     .task-grid{
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 1rem;
-    }
-
-    .task-block{
-        margin-bottom: 0.75rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid gold;
+        grid-template-columns: 1fr;
     }
 
 
     .data-item{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background: white;
-        padding: 1rem;
-        border-radius: 10px;
-        border: 1px solid black;
-        min-height: 360px;
-        max-height: 360px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-        transition: transform 0.2s ease;
+        padding: 1.5rem;
     }
 
-
-    .data-item:hover{
-        transform: scale(1.01);
-    }
 
     .label{
-        font-weight: bold;
-        color: #374151;
-        margin-bottom: 0.25rem;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-        word-break: break-word;
+        min-width: 100px;
+        font-size: 0.9rem;
         }
 
     .value{
-        font-size: 0.8rem;
-        color: black;
-        word-break: break-word;
-        
+        font-size: 0.8rem;    
     }
 }
