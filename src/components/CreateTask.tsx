@@ -106,7 +106,7 @@ useEffect(()=>{
 
     const userOptions: SelectOption[] = users.map(user=>({
         value: user.id,
-        label: `${user.first_name} (${user.last_name}) (${user.username})`
+        label: `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()} (${user.username})`
     }));
 
 
@@ -117,34 +117,6 @@ useEffect(()=>{
     const handleUserChange = (selectedOptions:any) =>{
         setSelectedUserOptions(selectedOptions)
     };
-
-    // const handleCarSelection = async (e: React.ChangeEvent<HTMLSelectElement>)=>{
-    //     const options = e.target.options;
-    //     const selectedValues: number[] =[];
-
-    //     for (let i =0; i < options.length; i++){
-    //         if (options[i].selected){
-    //             selectedValues.push(Number(options[i].value))
-    //         }
-    //     }
-
-    //     setSelectedCarIds(selectedValues);
-    // }
-
-    // const handleUserSelection = async (e: React.ChangeEvent<HTMLSelectElement>)=>{
-    //     const options = e.target.options;
-    //     const selectedValues: number[] =[];
-
-    //     for (let i = 0; i < options.length; i++){
-    //         if (options[i].selected){
-    //             selectedValues.push(Number(options[i].value))
-    //         }
-    //     }
-
-    //     setSelectedUserIds(selectedValues);
-    // }
-
-
 
 
     const handleCreateTask = async (e: React.FormEvent)=>{
