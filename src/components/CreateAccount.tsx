@@ -34,22 +34,19 @@ export default function CreateAccount(){
                 headers:{'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     email: registeremail, 
-                    password_hash: registerPassword,
+                    password: registerPassword,
                     first_name:firstName,
                     last_name:lastName,
                     username: userName,
                     role:role,
                     phone_number:phoneNumber
-
-
-                
                 })
             });
             const data = await response.json();
             
             if (response.ok){
                 navigate('/login');
-                console.log("Registeration lyckades", data);
+                console.log("Registration lyckades", data);
             }else{
                 setError(data.message || 'Registeration misslyckades');
                 console.log("Registeration misslyckades", data);
@@ -101,7 +98,7 @@ return(
                 required />
                 </label>
 
-                <label htmlFor="lösenord">
+                <label htmlFor="password">
                 Lösenord
                 <input type="password" 
                 placeholder="Lösenord" 
@@ -110,18 +107,18 @@ return(
                 required />
                 </label>
 
-                <label htmlFor="password"> 
+                <label htmlFor="confirmPassword"> 
                 Bekräfta Lösenord 
                 <input type="password" 
                 placeholder="Bekräfta Lösenord" 
                 value={registerConfermPassword}
-                onChange={(e)=>setRegisterConfermPassword(e.target.value)} 
+                onChange={(e)=>setRegisterConfermPassword(e.target.value) } 
                 required />
                 </label>
 
                 <label>
                     Välj roll
-                    <select value={role} onChange={(e)=>setRole(e.target.value)}>
+                    <select value={role} onChange={(e)=>setRole(e.target.value)} required>
                         <option value="">Välj roll </option>
                         <option value='admin'> Admin </option>
                         <option value='personal'> Personal </option>

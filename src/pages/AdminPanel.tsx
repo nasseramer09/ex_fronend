@@ -31,22 +31,16 @@ export default function AdminPanel(){
     <div className="dashboard-container">
 
       <div className="tab-buttons">
-         <button className={`tablink ${activeTab === "tasks" ? "active" : " "}`}
-          onClick={()=>setActiveTab("tasks")}> 
-            
-            Uppdrag </button>
-      </div>
-      
-       <div className="tab-buttons">
-         <button className={`tablink ${activeTab === "users" ? "active" : " "}`}
-          onClick={()=>setActiveTab("users")}> 
-            Användare </button>
-      </div>
 
-       <div className="tab-buttons">
+         <button className={`tablink ${activeTab === "tasks" ? "active" : " "}`}
+          onClick={()=>setActiveTab("tasks")}> Uppdrag </button>
+     
+         <button className={`tablink ${activeTab === "users" ? "active" : " "}`}
+          onClick={()=>setActiveTab("users")}> Användare </button>
+      
          <button className={`tablink ${activeTab === "create" ? "active" : " "}`}
-          onClick={()=>setActiveTab("create")}> 
-            Skapa konto </button>
+          onClick={()=>setActiveTab("create")}>  Skapa konto </button>
+          
       </div>
      
    <div className="tabcontent">{renderTab()}</div>

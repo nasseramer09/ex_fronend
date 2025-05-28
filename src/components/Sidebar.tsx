@@ -58,8 +58,6 @@ const Sidebar: React.FC<SideBarProps> = ({isOpen, onClose, isSmallScreen})=>{
             
                 <ul className="nav-links">
                     <li> <a href="/home"> Home </a> </li>
-                    <li> <a href="/dashboard"> Dashboard</a> </li>
-                    <li> <a href="#"> Planera uppdrag</a> </li>
                     <li> <a href="#"> Kalender</a> </li>
                     <li> <a href="/adminPanel"> Admin Panel</a> </li>
                 </ul>

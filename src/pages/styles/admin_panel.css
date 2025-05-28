@@ -6,7 +6,8 @@ padding: 1rem;
 
 .tab-buttons{
    display: flex;
-   justify-content: center;
+   flex-direction: row;
+   justify-content: space-evenly;
    gap: 1rem;
    margin-bottom: 0.1rem;
    flex-wrap: wrap;
