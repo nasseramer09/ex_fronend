@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./styles/layout.css"
 import Sidebar from './Sidebar'
-import {FaBars, FaUserCircle} from 'react-icons/fa'
+import {FaBars} from 'react-icons/fa'
 
 interface LayoutProps {
     children?: React.ReactNode;
@@ -32,20 +32,15 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
         <div className="layout-container">
 
                 <div className="header-bar">
-                    <button className={`hamburger-menu ${isSmalScreen ? "small":"large"}`} onClick={toggleSidebar}>
-                        <FaBars size={24} color = "#fff" />
-                    </button>
-
-                    <div className="profile">
-                        <FaUserCircle size={30} color="white" />
+                    <div className="navbar">
+                        <button className="menu-button" onClick={toggleSidebar}>
+                            <FaBars />
+                        </button>
                     </div>
-            <Sidebar isOpen={isSidebarOpen} 
-                     onClose={closeSidebar}
-                     isSmallScreen={isSmalScreen}/>
+                    <Sidebar isOpen={isSidebarOpen} 
+                             onClose={closeSidebar}
+                             isSmallScreen={isSmalScreen}/>
                 </div> 
-           
-                
-            
 
             <div className="content-wrapper" 
             style={{marginLeft: !isSmalScreen && isSidebarOpen ? "300px" : '0', 

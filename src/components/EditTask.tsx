@@ -1,161 +1,126 @@
 import { useEffect, useState } from "react";
 import "./styles/editTask.css"
 import { FaTruck, FaUser } from "react-icons/fa";
-import { FaCheckToSlot, FaLocationDot, FaLocationPin,  } from "react-icons/fa6";
+import { FaCheckToSlot, FaLocationDot, FaLocationPin } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
+import { apiRequest } from "../services/api";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000';
-type UserDetail={
-
-    id:number;
-    username:string;
-    first_name:string;
-    last_name:string;
+type UserDetail = {
+    id: number;
+    username: string;
+    first_name: string;
+    last_name: string;
 }
 
-type CarDetail={
-
-    id:number;
-    model:string;
-    license_plate:string;
-    status:string;
-    is_occupied:boolean
+type CarDetail = {
+    id: number;
+    model: string;
+    license_plate: string;
+    status: string;
+    is_occupied: boolean;
 }
 
 type Task = {
-    id:number;
-    title:string;
-    description:string;
-    car_ids:number[];
-    assigned_users:number[];
-    assigned_users_details:UserDetail[];
-    car_details:CarDetail[];
-    start_adress:string;
-    destination_adress:string;
-    status:string;
-    start_time:string;
-    end_time:string;
-
+    id: number;
+    title: string;
+    description: string;
+    car_ids: number[];
+    assigned_users: number[];
+    assigned_users_details: UserDetail[];
+    car_details: CarDetail[];
+    start_adress: string;
+    destination_adress: string;
+    status: string;
+    start_time: string;
+    end_time: string;
 }
-export default function EditTask(){
 
-    const { taskId } = useParams<{taskId:string}>();
+export default function EditTask() {
+    const { taskId } = useParams<{ taskId: string }>();
     const taskIdNum = Number(taskId);
     const navigate = useNavigate();
 
-    const [task, setTask]=useState<Task|null >(null);
+    const [task, setTask] = useState<Task | null>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState<Partial<Task>>({});
     const [avaliableUsers, setAvaliableUsers] = useState<UserDetail[]>([]);
     const [availableCars, setAvaliableCars] = useState<CarDetail[]>([]);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const taskData = await apiRequest<Task>(`/api/tasks/${taskIdNum}`, 'GET');
+                setTask(taskData);
+                setFormData(taskData);
 
-    useEffect(()=>{
-        const fetchData = async () =>{
+                const usersData = await apiRequest<UserDetail[]>('/api/users/get_all_users', 'GET');
+                setAvaliableUsers(usersData);
 
-            try{
-                const taskResponse = await fetch(`${API_BASE_URL}/api/tasks/${taskIdNum}`);
-                const taskData = await taskResponse.json();
+                const carsData = await apiRequest<CarDetail[]>('/api/cars/get_all_cars', 'GET');
+                setAvaliableCars(carsData);
 
-           if(!taskResponse.ok){
-            throw new Error(taskData.message || "Kunde inte hämta uppdraget");
-           }
+            } catch (error: any) {
+                setError(error.message || "Något gick fel vid hämtning av data i EditTask."); 
+                console.error("Fel vid hämtning EditTask:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-           setTask(taskData);
-           setFormData(taskData);
+        fetchData();
+    }, [taskIdNum]);
 
-        const userResponse = await fetch(`${API_BASE_URL}/api/users/get_all_users`);
-        const usersData = await userResponse.json();
-        
-        if(!userResponse.ok) {
-            throw new Error(usersData.message || "Kunde inte hämta användare");
-        }
-        
-        setAvaliableUsers(usersData);
-
-            const carResponse = await fetch(`${API_BASE_URL}/api/cars/get_all_cars`);
-            const carsData = await carResponse.json();
-
-           if(!carResponse.ok){
-            throw new Error(carsData.message || "Kunde inte hämta uppdraget");
-           }
-
-           setAvaliableCars(carsData);
-
-           
-
-        }catch (error:any){
-
-            setError(error.message || "Något gick fel vid hämtniong av data i edittask");
-            console.error("Fel vid hämtning EditTask", error);
-        }finally{
-            setLoading(false);
-        }
-    
-    };
-
-    fetchData();
-
-},[]);
-
-    const timeFormat =(isoString:string | Date | null) => {
-        if(!isoString) return "Inte satt"
+    const timeFormat = (isoString: string | Date | null) => {
+        if (!isoString) return "Inte satt"
         const date = new Date(isoString);
 
-        if (isNaN(date.getTime())){
+        if (isNaN(date.getTime())) {
             console.warn("Ogiltigt datumformat:", isoString);
             return "Ogiltig datum"
         }
         return date.toLocaleString('sv-SE', {
-            year:'numeric',
-            month:'2-digit',
-            day:'2-digit',
-            hour:'2-digit',
-            minute:'2-digit',
-            hour12:false
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
         }).replace(/\//g, '-')
     };
 
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>)=>{
-        const {name, value} = e.target;
-        setFormData(prev =>({...prev, [name]:value}))
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }))
     };
 
-
-    const handleAddUser = (userId:number) => {
+    const handleAddUser = (userId: number) => {
         setFormData(prev => {
             const currentAssignedIds = new Set(prev.assigned_users || []);
-            if(!currentAssignedIds.has(userId)){
+            if (!currentAssignedIds.has(userId)) {
                 const updatedAssignedUsers = [...(prev.assigned_users || []), userId];
                 const updatedAssignedUserDetails = avaliableUsers.filter(user => updatedAssignedUsers.includes(user.id));
-                return{
+                return {
                     ...prev,
-                    assigned_users:updatedAssignedUsers,
-                    assigned_users_details:updatedAssignedUserDetails,
-
+                    assigned_users: updatedAssignedUsers, assigned_users_details: updatedAssignedUserDetails,
                 };
             }
             return prev;
         });
     };
 
-    const handleRemoveUser = (userId:number) => {
+    const handleRemoveUser = (userId: number) => {
         setFormData(prev => {
-            
-                const updatedAssignedUsers = (prev.assigned_users || []).filter(id=>id !== userId);
-                const updatedAssignedUserDetails = avaliableUsers.filter(user => updatedAssignedUsers.includes(user.id));
-                return{
-                    ...prev,
-                    assigned_users:updatedAssignedUsers,
-                    assigned_users_details:updatedAssignedUserDetails,
-                };
+            const updatedAssignedUsers = (prev.assigned_users || []).filter(id => id !== userId);
+            const updatedAssignedUserDetails = avaliableUsers.filter(user => updatedAssignedUsers.includes(user.id));
+            return {
+                ...prev,
+                assigned_users: updatedAssignedUsers,
+                assigned_users_details: updatedAssignedUserDetails,
+            };
         });
     };
-
 
     const handleAddCar = (carId: number) => {
         setFormData(prev => {
@@ -185,28 +150,15 @@ export default function EditTask(){
         });
     };
 
-
-     const handleSave = async (e: React.FormEvent) => {
+    const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        setError(""); 
+        setError("");
         try {
-            const response = await fetch(`${API_BASE_URL}/api/tasks/${taskIdNum}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData), 
+            const result = await apiRequest<Task>(`/api/tasks/${taskIdNum}`, 'PATCH', {
+                body: formData,
             });
-
-            const result = await response.json();
-
-            if (!response.ok) {
-                throw new Error(result.message || "Kunde inte uppdatera uppdraget.");
-            }
-
-            setTask(result); 
-            setIsEditing(false); 
+            setTask(result);
+            setIsEditing(false);
             alert("Uppdraget uppdaterades framgångsrikt!");
 
         } catch (err: any) {
@@ -215,26 +167,16 @@ export default function EditTask(){
         }
     };
 
-
     const handleCancel = () => {
         setIsEditing(false);
         setFormData(task || {});
     };
 
-    if (loading) {
-        return <div className="loading">Laddar uppdrag...</div>;
-    }
+    if (loading) {return <div className="loading">Laddar uppdrag...</div>; }
+    if (error) {return <div className="error">Fel: {error}</div>;}
+    if (!task) { return <div className="not-found">Uppdraget hittades inte.</div>; }
 
-    if (error) {
-        return <div className="error">Fel: {error}</div>;
-    }
-
-    if (!task) {
-        return <div className="not-found">Uppdraget hittades inte.</div>;
-    }
-
-
-     return (
+    return (
         <div className="edit-task-container">
             <h1>Uppdrag: {task.title}</h1>
 
@@ -247,12 +189,11 @@ export default function EditTask(){
                         <button onClick={handleCancel} className="cancel-button">Avbryt</button>
                     </>
                 )}
-                 
-                 <button onClick={() => navigate('/adminPanel')} className="back-button">Tillbaka till Dashboard</button>
+                <button onClick={() => navigate('/adminPanel')} className="back-button">Tillbaka till Dashboard</button>
             </div>
 
             {isEditing ? (
-               
+
                 <form onSubmit={handleSave} className="task-form">
                     <div className="form-group">
                         <label>Titel:</label>
@@ -288,7 +229,6 @@ export default function EditTask(){
                         </select>
                     </div>
 
-                    
                     <div className="form-section">
                         <h3><FaUser /> Tilldelad Personal:</h3>
                         <div className="assigned-list">
@@ -346,7 +286,7 @@ export default function EditTask(){
                     </div>
                 </form>
             ) : (
-               
+
                 <div className="task-details-view">
                     <div className="detail-row">
                         <span className="label">Titel:</span>
@@ -401,4 +341,3 @@ export default function EditTask(){
         </div>
     );
 }
-

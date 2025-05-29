@@ -1,0 +1,331 @@
+.user-detail-page-container {
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 30px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.user-detail-page-container h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.detail-message { 
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.loading-message {
+    background-color: #e2e3e5;
+    color: #383d41;
+    border: 1px solid #d6d8db;
+}
+
+.no-user-data-message {
+    background-color: #ffeeba;
+    color: #856404;
+    border: 1px solid #ffc107;
+}
+
+.user-info-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+}
+
+.info-pair {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #555;
+    min-width: 150px;
+    display: flex;
+    align-items: center;
+}
+
+.info-label svg {
+    margin-right: 10px;
+    color: #007bff;
+    font-size: 1.2em;
+}
+
+.user-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+}
+
+.form-field-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-field-group label {
+    flex: 1 1 calc(50% - 10px);
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-field-group input[type="text"],
+.form-field-group input[type="email"],
+.form-field-group input[type="tel"],
+.form-field-group input[type="password"],
+.form-field-group select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-field-group input:focus,
+.form-field-group select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.action-buttons-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.action-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.save-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.save-button:hover {
+    background-color: #218838;
+}
+
+.edit-button {
+    background-color: #007bff;
+    color: white;
+    margin-top: 20px;
+    align-self: center;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+.cancel-button {
+    background-color: #6c757d;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: #5a6268;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.section-divider {
+    border: 0;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 40px 0;
+}
+
+.user-detail-page-container h3 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.assigned-tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.no-assigned-tasks-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 8px;
+}
+
+.assigned-task-card {
+    background-color: #e9f5ff;
+    border: 1px solid #b3d9ff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.assigned-task-detail {
+    display: flex;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #444;
+}
+
+.assigned-task-detail .detail-label {
+    font-weight: bold;
+    min-width: 90px;
+    color: #333;
+}
+
+.assigned-task-card .view-task-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin-top: 15px;
+    transition: background-color 0.2s ease;
+    align-self: flex-start;
+}
+
+.assigned-task-card .view-task-button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .user-detail-page-container {
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .user-detail-page-container h2 {
+        font-size: 2rem;
+    }
+
+    .user-info-card,
+    .user-edit-form {
+        padding: 20px;
+    }
+
+    .form-field-group label {
+        flex: 1 1 100%;
+    }
+
+    .action-buttons-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .action-button {
+        width: 100%;
+    }
+
+    .assigned-tasks-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .user-detail-page-container h3 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-detail-page-container {
+        padding: 15px;
+        margin: 15px auto;
+        border-radius: 5px;
+    }
+
+    .user-detail-page-container h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .user-info-card,
+    .user-edit-form {
+        padding: 15px;
+    }
+
+    .info-pair, .assigned-task-detail {
+        flex-direction: column; 
+        align-items: flex-start;
+        font-size: 1rem;
+    }
+
+    .info-label, .assigned-task-detail .detail-label {
+        min-width: unset;
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .form-field-group input,
+    .form-field-group select {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .assigned-task-card {
+        padding: 15px;
+    }
+}

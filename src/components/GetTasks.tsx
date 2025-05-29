@@ -52,7 +52,6 @@ export default function GetTasks(){
            });
 
            const data = await response.json();
-           console.log('reposne data', data)
 
            if(!response.ok){
             throw new Error(data.message || "Kunde inte hämta uppdraget");
