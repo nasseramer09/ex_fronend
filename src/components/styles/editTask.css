@@ -1,17 +1,13 @@
-/* editTask.css */
-
-/* --- Container för hela EditTask-komponenten --- */
 .edit-task-container {
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     padding: 30px;
     margin: 30px auto;
-    max-width: 900px; /* Ökad max-bredd för bättre layout */
+    max-width: 900px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
 }
-
 .edit-task-container h1 {
     text-align: center;
     color: #2c3e50;
@@ -20,7 +16,6 @@
     font-weight: 600;
 }
 
-/* --- Knappar för att redigera/spara/avbryta/tillbaka --- */
 .task-actions {
     display: flex;
     justify-content: center;
@@ -39,7 +34,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.task-actions button.edit-button { /* Om du vill styla redigera-knappen specifikt */
+.task-actions button.edit-button {
     background-color: #3498db;
     color: white;
 }
@@ -63,11 +58,9 @@
     opacity: 0.9;
     transform: translateY(-2px);
 }
-
-/* --- Formulär i redigeringsläge --- */
 .task-form {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Två kolumner för inputs */
+    grid-template-columns: 1fr 1fr;
     gap: 25px;
     background-color: white;
     padding: 30px;
@@ -111,9 +104,8 @@
     resize: vertical;
 }
 
-/* --- Sektioner för tilldelad personal/fordon --- */
 .form-section {
-    grid-column: 1 / -1; /* Sträcker sig över båda kolumnerna */
+    grid-column: 1 / -1;
     border-top: 1px solid #eee;
     padding-top: 20px;
     margin-top: 20px;
@@ -129,7 +121,7 @@
 }
 
 .form-section h3 svg {
-    color: #007bff; /* Färg på ikonerna */
+    color: #007bff;
     font-size: 1.2em;
 }
 
@@ -187,14 +179,13 @@
     outline: none;
 }
 
-/* --- Detaljvisning (när man inte redigerar) --- */
 .task-details-view {
     background-color: white;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Två kolumner för detaljer */
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
@@ -215,7 +206,7 @@
 }
 
 .detail-row .label svg {
-    color: #007bff; /* Färg på ikonerna */
+    color: #007bff;
     font-size: 1.1em;
 }
 
@@ -224,41 +215,35 @@
     font-size: 1em;
     line-height: 1.5;
 }
-
-/* --- Status-etiketter --- */
 .status {
     padding: 5px 10px;
     border-radius: 5px;
     font-weight: 600;
     font-size: 0.9em;
-    display: inline-block; /* För att den ska anpassa sig efter texten */
+    display: inline-block;
 }
-
 .status.planerat {
-    background-color: #ffc107; /* Gul */
+    background-color: #ffc107;
     color: #333;
 }
-
 .status.pågående {
-    background-color: #007bff; /* Blå */
+    background-color: #007bff;
     color: white;
 }
-
 .status.klart {
-    background-color: #28a745; /* Grön */
+    background-color: #28a745;
     color: white;
 }
 
 .status.avbrutet {
-    background-color: #dc3545; /* Röd */
+    background-color: #dc3545;
     color: white;
 }
 
-/* --- Responsiv design --- */
 @media (max-width: 768px) {
     .task-form,
     .task-details-view {
-        grid-template-columns: 1fr; /* En kolumn på mindre skärmar */
+        grid-template-columns: 1fr;
     }
 
     .edit-task-container {

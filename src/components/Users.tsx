@@ -1,77 +1,48 @@
-import { useEffect, useState } from "react";
-import { FaEnvelope, FaPhone } from "react-icons/fa";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000';
-import "./styles/tasks.css"
+import { useState } from "react";
+import "./styles/tasks.css";
+import { FaPlus } from "react-icons/fa";
+import GetUsers from "./GetUsers";
+import CreateAccount from "./CreateAccount";
 
-export default function Users(){
-    const [users, setUsers] = useState([]);
-    const [error, setError]=useState("");
+export default function Users() {
+    const [activeTab, setActiveTab] = useState("viewUsers");
 
+    const renderTab = () => {
+        switch (activeTab) {
+            case "viewUsers":
+                return <GetUsers />;
+            case "createAccount":
+                return <CreateAccount />;
+            default:
+                return <GetUsers />;
+        }
+    };
 
-    useEffect(() =>{
-        const fetchUsers = async () =>{
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/users/get_all_users`,{
-                    method: 'GET',
-                });
+    return (
+        <>
+            <div className="buttonWrapper">
+                <div className="taskTab-buttons">
+                    <button
+                        className={`tablink ${activeTab === "viewUsers" ? "active" : ""}`}
+                        onClick={() => setActiveTab("viewUsers")}
+                    >
+                        Se Användare
+                    </button>
+                </div>
 
-                const data = await response.json();
+                <div className="taskTab-buttons">
+                    <button
+                        className={`tablink ${activeTab === "createAccount" ? "active" : ""}`}
+                        onClick={() => setActiveTab("createAccount")}
+                    >
+                        <FaPlus />
+                    </button>
+                </div>
+            </div>
 
-                if(!response.ok){
-                        throw new Error(data.message || "Kunde inte hämta användarna");
-                    }
-
-                    setUsers(data);
-            }catch (error:any){
-                    setError(error.message || "Något gick fel");
-                    console.error("Fel vid hämtning av användare")
-                }
-        };
-
-            fetchUsers();
-}, []);
-
-return(
-   
-  <div className="container">
-        
-        {error && <p className="error">{error}</p>}
-    <div className="data-list">
-<h2> Användare Lista </h2>
-{users.map((user:any)=>(
-      <div key={user.id} className="data-item"> 
-
-            
-          <div className="data-pair">
-              <span className="data-label"> Förnamn:  </span>
-              <span> {user.first_name} </span>
-          </div>
-
-          <div className="data-pair">
-              <span className="data-label"> Efternamn:  </span>
-              <span> {user.last_name} </span>
-          </div>
-          
-          <div className="data-pair">
-              <span className="data-label"> Role:  </span>
-              <span> {user.role} </span>
-          </div>
-      
-          <div className="data-pair">
-              <span className="data-label"> <FaPhone/>  </span>
-              <span> {user.phone_number} </span>
-          </div>
-
-          <div className="data-pair">
-              <span className="data-label"> <FaEnvelope/>  </span>
-              <span> {user.email} </span>
-          </div>
-        
-      </div>
-       ))}
-    </div>
-  </div>
-    
-);
-
+            <div className="taskTabContent">
+                {renderTab()}
+            </div>
+        </>
+    );
 }

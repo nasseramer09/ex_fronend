@@ -3,8 +3,8 @@ import { FaUser} from "react-icons/fa";
 import Select from "react-select";
 import { FaLocationCrosshairs, FaLocationDot, FaSquareCheck } from "react-icons/fa6";
 import "./styles/createTasks.css"
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000';
-
+import { apiRequest } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 type Car = {
     id:number;
@@ -44,58 +44,53 @@ export default function CreateTask(){
     const[status, setStatus]=useState("");
     const[error, setError]=useState("");
 
+    const navigate = useNavigate();
 
     useEffect(()=>{ 
-
-    const fetchUsers = async ()=>{
-        
-        try{
-            const response = await fetch(`${API_BASE_URL}/api/users/get_all_users`, {
-                method:'GET',
-            });
-
-            const data = await response.json();
-
-            if(!response.ok){
-                throw new Error(data.message || "Kunde inte hämta användare");
+        const fetchUsers = async ()=>{
+            try{
+                const data = await apiRequest<User[]>('/api/users/get_all_users', 'GET');
+                console.log('Raw user data:', data);
+                
+                if (!Array.isArray(data)) {
+                    console.error('User data is not an array:', data);
+                    return;
+                }
+                
+                const avaliableUsers = data.filter((user:User) => !user.is_occupied);
+                console.log('Filtered users:', avaliableUsers);
+                
+                setUsers(avaliableUsers);
+            }catch(error:any){
+                console.error('Error fetching users:', error);
+                setError(error.message || "Något blev fel vid hämtning av användare");
             }
-
-            const avaliableUsers = data.filter((user:User) => !user.is_occupied);
-
-            setUsers(avaliableUsers);
-        }catch(error:any){
-            setError(error.message || "Något blev fel ");
-            console.error("Något blev fel vid hämtningen av fordon");
         }
-    }
-    fetchUsers();
-},[]);
+        fetchUsers();
+    },[]);
 
-useEffect(()=>{ 
-
-    const fetchCars = async ()=>{
-        
-        try{
-            const response = await fetch(`${API_BASE_URL}/api/cars/get_all_cars`, {
-                method:'GET',
-            });
-
-            const data = await response.json();
-
-            if(!response.ok){
-                throw new Error(data.message || "Kunde inte hämta fordon");
+    useEffect(()=>{ 
+        const fetchCars = async ()=>{
+            try{
+                const data = await apiRequest<Car[]>('/api/cars/get_all_cars', 'GET');
+                console.log('Raw car data:', data);
+                
+                if (!Array.isArray(data)) {
+                    console.error('Car data is not an array:', data);
+                    return;
+                }
+                
+                const avaliableCars = data.filter((car:Car) => !car.is_occupied);
+                console.log('Filtered cars:', avaliableCars);
+                
+                setCars(avaliableCars);
+            }catch(error:any){
+                console.error('Error fetching cars:', error);
+                setError(error.message || "Något blev fel vid hämtning av fordon");
             }
-
-            const avaliableCars = data.filter((car:Car) => !car.is_occupied);
-
-            setCars(avaliableCars);
-        }catch(error:any){
-            setError(error.message || "Något blev fel ");
-            console.error("Något blev fel vid hämtningen av fordon");
         }
-    }
-    fetchCars();
-},[]);
+        fetchCars();
+    },[]);
 
 
 
@@ -119,61 +114,74 @@ useEffect(()=>{
     };
 
 
-    const handleCreateTask = async (e: React.FormEvent)=>{
+    const handleCreateTask = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
 
-        const carIdsToSend = selectedCarOptions ? selectedCarOptions.map(option=> option.value):[];
-        const userIdsToSend = selectedUserOptions ? selectedUserOptions.map(option=> option.value):[];
+        if (!title || !description || !startTime || !endTime || !startadress || !destinationAdress) {
+            setError("Alla fält måste fyllas i");
+            return;
+        }
+
+        const startDate = new Date(startTime);
+        const endDate = new Date(endTime);
         
-
-        if (carIdsToSend.length === 0){
-            setError("Minnst ett fordon måste tilldelas uppgiften. ");
+        if (startDate >= endDate) {
+            setError("Sluttiden måste vara efter starttiden");
+            return;
         }
 
-        if (userIdsToSend.length === 0){
-            setError("Minnst ett perosnal måste tilldelas uppgiften. ");
-        }
+        try {
+            const taskData = {
+                title,
+                description,
+                car_ids: selectedCarOptions.map(option => option.value),
+                assigned_users: selectedUserOptions.map(option => option.value),
+                start_time: startTime,
+                end_time: endTime,
+                start_adress: startadress,
+                destination_adress: destinationAdress,
+                status: status || 'planerat'
+            };
 
-        try{
-            const response = await fetch(`${API_BASE_URL}/api/tasks/create_task`, {
-                method: 'POST',
-                headers:{'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    title: title,
-                    description:description,
-                    car_ids:carIdsToSend,
-                    assigned_users:userIdsToSend,
-                    start_time:startTime,
-                    end_time:endTime,
-                    start_adress:startadress,
-                    destination_adress:destinationAdress,
-                    status: status || 'planerat',
-                })
+            const response = await apiRequest('/api/tasks/create_task', 'POST', {
+                body: taskData
             });
-            const data = await response.json();
 
-            if (response.ok){
-                console.log("Uppdraget skapat", data);
-                setTitle("");
-                setDescription("");
-                setSelectedCarOptions([]);
-                setSelectedUserOptions([]);
-                setStartadress("");
-                setDestinationAdress("");
-                setStartTime("")
-                setEndTime("")
-                window.location.reload();
-                alert("uppgift har skapats! ")
-            }else{
-                setError(data.message || 'Kunde inte skapa uppdraget');
-                console.log( "Kunde inte skapa uppdraget", data)
+            
+            setTitle("");
+            setDescription("");
+            setSelectedCarOptions([]);
+            setSelectedUserOptions([]);
+            setStartadress("");
+            setDestinationAdress("");
+            setStartTime("");
+            setEndTime("");
+            setStatus("");
+
+           
+            alert("Uppgiften har skapats!");
+            navigate('/adminPanel');
+            
+        } catch (error: any) {
+            if (error.message?.includes('created') || error.message?.includes('success')) {
+                alert("Uppgiften har skapats!");
+                navigate('/adminPanel');
+            } else {
+                setError(error.message || "Ett oväntat fel uppstod vid skapandet av uppgiften");
+                console.error("Error creating task:", error);
             }
-        }catch(error:any){
-            setError("Fel vid skapandet av uppdrag " + error.message)
-            console.log("Fel vid skapandet av uppdrag ", error)
         }
     };
+
+    console.log('Current state:', {
+        cars,
+        users,
+        carOptions,
+        userOptions,
+        selectedCarOptions,
+        selectedUserOptions
+    });
 
     return (
 
@@ -215,25 +223,31 @@ useEffect(()=>{
         
          <label>
             välj fordon:
-            <Select isMulti
-            options={carOptions}
-            value={selectedCarOptions}
-            onChange={handleCarChange}
-            placeholder="Tilldela en eller flera fordon"
-            className="react-select-coantiner"
-            classNamePrefix="react-select"/>
+            <Select 
+                isMulti
+                options={carOptions}
+                value={selectedCarOptions}
+                onChange={handleCarChange}
+                placeholder="Tilldela en eller flera fordon"
+                className="react-select-coantiner"
+                classNamePrefix="react-select"
+                noOptionsMessage={() => "Inga fordon tillgängliga"}
+            />
         </label>
         
 
         <label>
             <FaUser/>Tilldela användare:
-            <Select isMulti
-            options={userOptions}
-            value={selectedUserOptions}
-            onChange={handleUserChange}
-            placeholder="Tilldela en eller flera användare"
-            className="react-select-coantiner"
-            classNamePrefix="react-select"/>
+            <Select 
+                isMulti
+                options={userOptions}
+                value={selectedUserOptions}
+                onChange={handleUserChange}
+                placeholder="Tilldela en eller flera användare"
+                className="react-select-coantiner"
+                classNamePrefix="react-select"
+                noOptionsMessage={() => "Inga användare tillgängliga"}
+            />
         </label>
 
 

@@ -14,8 +14,6 @@ import {BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
 
 export default function Dashboard(){
 
- 
-
     return(
         <>
         <Layout children={undefined}></Layout>

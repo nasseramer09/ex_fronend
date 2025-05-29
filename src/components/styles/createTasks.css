@@ -1,68 +1,154 @@
-.createTask-container{
-    max-width: 1300px;
+.createTask-container {
+    max-width: 1200px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: #5C7285;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.createTask-container h1{
+.createTask-container h1 {
     text-align: center;
-    margin-bottom: 1.5rem;
-    color: aliceblue;
+    color: #333;
+    margin-bottom: 2rem;
+    font-size: 2rem;
 }
 
-.error-message{
-    color: red;
-    margin-bottom: 1rem;
-    font-size: larger;
-    font-weight: bolder;
-    text-align: center;
+.createTask-container form {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
-.createTask-container label{
-    display: block;
-    margin-bottom: 1rem;
-    color: black;
-    font-weight: bolder;
+.createTask-container label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: #444;
 }
-
 
 .createTask-container input[type="text"],
-.createTask-container input[type="number"],
-.createTask-container select{
-  width: 100%;
-  padding: 0.75rem;
-  margin-top: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 1rem;
-
+.createTask-container input[type="datetime-local"],
+.createTask-container textarea,
+.createTask-container select {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.createTask-container select{
- text-align: center;
-
-
+.createTask-container input:focus,
+.createTask-container textarea:focus,
+.createTask-container select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    outline: none;
 }
 
-.createTask-container button.createTask-button {
- background-color: #F7F7F7;
- color: black;
- padding: 1rem 1.5rem;
- border: none;
- border-radius: 4px;
- cursor: pointer;
- font-size: 1.5rem;
- transition: background-color 0.3s ease;
- width: 100%;
- display: block;
- margin-top: 1.5rem;
+.createTask-container textarea {
+    min-height: 100px;
+    width: 100%;
+    resize: vertical;
 }
 
-.createTask-container button.createTask-button:hover {
-background-color: #393E46;
-color: white;
+.react-select-container {
+    width: 100%;
+}
+
+.react-select-container .react-select__control {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    min-height: 45px;
+}
+
+.react-select-container .react-select__control:hover {
+    border-color: #3498db;
+}
+
+.react-select-container .react-select__menu {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.createTask-button {
+    background-color: #3498db;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.createTask-button:hover {
+    background-color: #2980b9;
+}
+
+.error-message {
+    color: #e74c3c;
+    background-color: #fde8e8;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .createTask-container {
+        padding: 3rem;
+    }
+
+    .createTask-container form {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .createTask-container form label:nth-child(1),
+    .createTask-container form label:nth-child(2),
+    .createTask-container form label:nth-child(5),
+    .createTask-container form label:nth-child(6) {
+        grid-column: span 2;
+    }
+
+    .createTask-button {
+        grid-column: span 2;
+        max-width: 300px;
+        margin: 1rem auto;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .createTask-container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .createTask-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .createTask-container form {
+        gap: 1rem;
+    }
+
+    .createTask-container input[type="text"],
+    .createTask-container input[type="datetime-local"],
+    .createTask-container textarea,
+    .createTask-container select {
+        padding: 0.6rem;
+    }
+}
+
+.createTask-container select[name="status"] {
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+.createTask-container label svg {
+    margin-right: 0.5rem;
+    color: #3498db;
 }
