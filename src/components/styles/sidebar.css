@@ -1,0 +1,146 @@
+.sidebar{
+  width: 300px;
+   background-color: #393E46;
+   height: 100vh;
+   position: fixed;
+   top: 0;
+   left: 0;
+   transform: translateX(-100%);
+   transform: left 0.3s ease;
+   z-index: 20;
+   overflow-y: auto;
+   padding: 1rem;
+   display: flex;
+   flex-direction: column;
+   
+}
+
+.sidebar.open{
+   transform: translateX(0);
+}
+
+.sidebar-header{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 1rem;
+}
+
+.logo{
+   font-size: 1.5rem;
+   color: white;
+   display: flex;
+   align-items: center;
+}
+
+.logo-img{
+    height: 50px;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+}
+
+
+.close-button{
+   background: none;
+   border: none;
+   font-size: 1rem;
+   color: white;
+   cursor: pointer;
+   position: absolute;
+   right: 30px;
+   top: 30px;
+  
+}
+
+.nav-links{
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.nav-links li{
+   margin-bottom: 0.5rem;
+} 
+
+.nav-links li a{
+
+   display: block;
+   font-size: 1.1rem;
+   padding: .5rem;
+   display: block;
+   position: relative;
+   transition: bckground-color 0.3s;
+   text-decoration: none;
+   color: white;
+    
+}
+
+.nav-links a:hover{
+   background-color: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-right{
+   margin-top: auto;
+   text-align: center;
+}
+
+.logout-div{
+   margin-top: 1rem;
+   text-align: center;
+}
+
+.logout-div{
+   margin-top: 1rem;
+   text-align: center;
+}
+
+.loggaut{
+    background-color: #DFD0B8;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.loggaut:hover{
+    background-color: red;
+    color: white;
+}
+
+.nav-links a::after{
+   content: "";
+   position: absolute;
+   left: 0;
+   bottom: 0;
+   height: 2px;
+   width: 0%;
+   background-color: white;
+   transition: width 0.3s ease;
+
+}
+
+.nav-links a:hover{
+    color: #ffffff;
+   background-color: transparent;   
+   
+}
+
+.nav-links a:hover::after{
+    width: 100%;  
+   
+}
+
+@supports (gap: 1rem){
+    .nav-links{gap: 1rem;
+    }
+    .nav-links li{
+        margin-left: 0;
+    }
+}
+
+
+
+
